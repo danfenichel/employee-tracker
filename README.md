@@ -23,3 +23,7 @@ Command-line application that allows the user to:
 ## GIF Screenshot
 
 ![giffy](./gif.mp4)
+
+## Link to GitHub Repository
+
+https://github.com/danfenichel/employee-tracker
