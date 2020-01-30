@@ -60,15 +60,45 @@ function viewData() {
         } else {
             startQuestions();
         }
-    })
+    });
 }
 
-// function view_all_departments() {
-//     connection.query("SELECT * FROM departments", function (err, res) {
-//         if (err) throw err;
-//         // Log all results of the SELECT statement
-//         console.log("\n");
-//         console.table(res);
-//     })
-//     main_menu_prompt()
-// }
+function viewAllData() {
+    connection.query("SELECT a.id, a.first_name, a.last_name, role.title, role.salary, department.name, CONCAT(b.first_name ,' ' ,b.last_name) AS manager FROM department RIGHT JOIN role ON role.department_id = department.id RIGHT JOIN employee a ON a.role_id = role.id LEFT JOIN employee b ON b.id = a.manager_id", function(err, res) {
+        if (err) throw (err);
+        console.log("\n");
+        console.table(res);
+        console.log("\n");
+    });
+    startQuestions();
+}
+
+function viewDepts() {
+    connection.query("SELECT * FROM department", function(err, res) {
+        if (err) throw (err);
+        console.log("\n");
+        console.table(res);
+        console.log("\n");
+    });
+    startQuestions();
+}
+
+function viewRoles() {
+    connection.query("SELECT * FROM role", function(err, res) {
+        if (err) throw (err);
+        console.log("\n");
+        console.table(res);
+        console.log("\n");
+    });
+    startQuestions();
+}
+
+function viewEmps() {
+    connection.query("SELECT * FROM employee", function(err, res) {
+        if (err) throw (err);
+        console.log("\n");
+        console.table(res);
+        console.log("\n");
+    });
+    startQuestions();
+}
