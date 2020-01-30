@@ -102,3 +102,24 @@ function viewEmps() {
     });
     startQuestions();
 }
+
+function addData() {
+    inquirer
+    .prompt({
+        name: "addMenu",
+        type: "list",
+        message: "Would you like to add a DEPARTMENT, a ROLE, or an EMPLOYEE?",
+        choices: ["ADD DEPARTMENT", "ADD ROLE", "ADD EMPLOYEE", "GO BACK"]
+    }).then(function(aAnswer) {
+        if (aAnswer.addMenu === "ADD DEPARTMENT") {
+            viewDepts();
+        } else if (aAnswer.addMenu === "ADD ROLE") {
+            viewRoles();
+        } else if (aAnswer.addMenu === "ADD EMPLOYEE") {
+            viewEmps();
+        } else {
+            startQuestions();
+        }
+    });
+}
+
