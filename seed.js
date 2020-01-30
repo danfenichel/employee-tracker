@@ -112,14 +112,59 @@ function addData() {
         choices: ["ADD DEPARTMENT", "ADD ROLE", "ADD EMPLOYEE", "GO BACK"]
     }).then(function(aAnswer) {
         if (aAnswer.addMenu === "ADD DEPARTMENT") {
-            viewDepts();
+            addDept();
         } else if (aAnswer.addMenu === "ADD ROLE") {
-            viewRoles();
+            addRole();
         } else if (aAnswer.addMenu === "ADD EMPLOYEE") {
-            viewEmps();
+            addEmp();
         } else {
             startQuestions();
         }
     });
 }
 
+function addDept() {
+    inquirer
+    .prompt({
+        name: "newDept",
+        type: "input",
+        message: "What DEPARTMENT would you like to add?"
+    }).then(async function(dAnswer) {
+        connection.query("INSERT INTO department SET ?", {name: dAnswer.newDept}, function(err) {
+            if (err) throw (err);
+        });
+        await startQuestions();
+    });
+}
+
+function addRole() {
+    inquirer
+    .prompt([
+        {
+            name: "roleName",
+            type: "input",
+            message: "What is the title of the ROLE you would like to add?"
+        },
+        {
+            name: "rolePay",
+            type: "input",
+            message: "What is the salary for this new ROLE?"
+        },
+        {
+            name: "deptId",
+            type: "input",
+            message: "What is the department ID for this new ROLE?"
+        }
+    ]).then(async function(rAnswer) {
+        connection.query("INSERT INTO role SET ?",
+        {
+            title: rAnswer.roleName,
+            salary: rAnswer.rolePay,
+            department_id: rAnswer.deptId
+        },
+        function(err) {
+            if (err) throw (err);
+        });
+        await startQuestions();
+    });
+}
