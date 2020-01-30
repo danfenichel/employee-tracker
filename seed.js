@@ -3,7 +3,7 @@ const mysql = require("mysql");
 const cTable = require('console.table');
 require("dotenv").config();
 
-var connection = mysql.createConnection({
+const connection = mysql.createConnection({
     host: "localhost",
   
     port: 3306,
@@ -161,7 +161,7 @@ function addRole() {
             title: rAnswer.roleName,
             salary: rAnswer.rolePay,
             department_id: rAnswer.deptId
-        },
+        }, 
         function(err) {
             if (err) throw (err);
         });
@@ -207,5 +207,31 @@ function addEmp() {
 }
 
 function updateData() {
-    
+    inquirer
+    .prompt([
+        {
+            name: "empId",
+            type: "input",
+            message: "What is the employee ID for the EMPLOYEE you would like to update?"
+        },
+        {
+            name: "empRole",
+            type: "input",
+            message: "What is the new role ID for this EMPLOYEE?"
+        }
+    ]).then(async function(uAnswer) {
+        connection.query("UPDATE employee SET ? WHERE ?",
+        [
+            {
+                role_id: uAnswer.empRole 
+            },
+            {
+                id: uAnswer.empId
+            }
+        ],
+        function(err) {
+            if (err) throw (err);
+        });
+        await startQuestions();
+    });
 }
