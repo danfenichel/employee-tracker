@@ -168,3 +168,44 @@ function addRole() {
         await startQuestions();
     });
 }
+
+function addEmp() {
+    inquirer
+    .prompt([
+        {
+            name: "empFirstName",
+            type: "input",
+            message: "What is the first name of the EMPLOYEE you would like to add?"
+        },
+        {
+            name: "empLastName",
+            type: "input",
+            message: "What is the last name of the EMPLOYEE you would like to add?"
+        },
+        {
+            name: "roleId",
+            type: "input",
+            message: "What is the role ID for the EMPLOYEE you would like to add?"
+        },
+        {
+            name: "mngrId",
+            type: "input",
+            message: "What is the manager ID for the EMPLOYEE you would like to add?"
+        }
+    ]).then(async function(eAnswer) {
+        connection.query("INSERT INTO employee SET ?",
+        {
+            first_name: eAnswer.empFirstName,
+            last_name: eAnswer.empLastName,
+            role_id: eAnswer.roleId,
+            manager_id: eAnswer.mngrId
+        }, function(err) {
+            if (err) throw (err);
+        });
+        await startQuestions();
+    });
+}
+
+function updateData() {
+    
+}
